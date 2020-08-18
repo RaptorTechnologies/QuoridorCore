@@ -10,7 +10,6 @@ add_executable(quoridor-cli
    src/ConsolePlayer.cpp
 )
 
-target_compile_options(quoridor-cli PRIVATE -Werror -Wall -Wextra)
 target_include_directories(quoridor-cli PRIVATE include)
 target_link_libraries(quoridor-cli qcore)
 

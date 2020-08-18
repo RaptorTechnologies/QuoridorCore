@@ -1,6 +1,7 @@
 #ifndef Header_qcore_GameController
 #define Header_qcore_GameController
 
+#include "Qcore_API.h"
 #include "Player.h"
 #include "BoardState.h"
 
@@ -22,7 +23,7 @@ namespace qcore
       std::string ip;
    };
 
-   class GameController
+   class QCODE_API GameController
    {
       // Encapsulated data members
    private:

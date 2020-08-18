@@ -11,6 +11,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/export/bin)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_library(project_warnings INTERFACE)
+
+include(cmake/project_warnings.cmake)
+set_project_warnings(project_warnings)
+
+link_libraries(project_warnings)
+
 add_subdirectory(qcore)
 add_subdirectory(qcli)
 add_subdirectory(plugins)

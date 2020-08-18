@@ -1,6 +1,7 @@
 #ifndef Header_qcore_Game
 #define Header_qcore_Game
 
+#include "Qcore_API.h"
 #include "PlayerAction.h"
 #include "BoardState.h"
 

@@ -1,6 +1,7 @@
 #ifndef Header_qcore_GameState
 #define Header_qcore_GameState
 
+#include "Qcore_API.h"
 #include "PlayerAction.h"
 
 #include <list>
@@ -13,7 +14,7 @@ namespace qcore
 {
    const uint8_t BOARD_MAP_SIZE = BOARD_SIZE * 2 - 1;
 
-   class BoardMap
+   class QCODE_API BoardMap
    {
       // Type definitions
    public:
@@ -48,7 +49,7 @@ namespace qcore
       bool isWall(const Position& p);
    };
 
-   class BoardState
+   class QCODE_API BoardState
    {
       // Type definitions
    public:

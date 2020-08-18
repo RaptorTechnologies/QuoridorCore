@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <string>
 
 namespace qcli
 {
