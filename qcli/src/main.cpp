@@ -47,18 +47,30 @@ inline std::ostream& operator<<(std::ostream &os, const TEXT_ASCII_COLOR color)
 
 void PrintAsciiGameBoard()
 {
+#ifdef WIN32
     const std::string TABLE_VERTICAL_BORDER = std::string(1, static_cast<char>(186));
     const std::string TABLE_HORIZONTAL_BORDER = std::string(1, static_cast<char>(205));
     const std::string TABLE_BOTTOM_LEFT_BORDER = std::string(1, static_cast<char>(200));
     const std::string TABLE_BOTTOM_RIGHT_BORDER = std::string(1, static_cast<char>(188));
     const std::string TABLE_TOP_LEFT_BORDER = std::string(1, static_cast<char>(201));
     const std::string TABLE_TOP_RIGHT_BORDER = std::string(1, static_cast<char>(187));
+    const std::string QUORIDOR_HORIZONTAL_WALL = std::string(3, static_cast<char>(196));
+    const std::string QUORIDOR_VERTICAL_WALL = std::string(1, static_cast<char>(179));
+#else 
+    const std::string TABLE_VERTICAL_BORDER = std::string("\u2551");
+    const std::string TABLE_HORIZONTAL_BORDER = std::string("\u2550");
+    const std::string TABLE_BOTTOM_LEFT_BORDER = std::string("\u255A");
+    const std::string TABLE_BOTTOM_RIGHT_BORDER = std::string("\u255D");
+    const std::string TABLE_TOP_LEFT_BORDER = std::string("\u2554");
+    const std::string TABLE_TOP_RIGHT_BORDER = std::string("\u2557");
+    const std::string QUORIDOR_HORIZONTAL_WALL = std::string("\u2500\u2500\u2500");
+    const std::string QUORIDOR_VERTICAL_WALL = std::string("\u2502");
+#endif
+
     const std::string TABLE_TOP_MARGIN = "\n";
     const std::string TABLE_BOTTOM_MARGIN = "\n";
     const std::string TABLE_LEFT_MARGIN = "   ";
     const std::string TABLE_RIGHT_MARGIN = " ";
-    const std::string QUORIDOR_HORIZONTAL_WALL = std::string(3, static_cast<char>(196));
-    const std::string QUORIDOR_VERTICAL_WALL = std::string(1, static_cast<char>(179));
     const int TABLE_LEFT_INDEX_WIDTH = 2;
     const std::string TABLE_LEFT_PADDING = " ";
     const std::string TABLE_RIGHT_PADDING = " ";
