@@ -81,6 +81,9 @@ namespace qcore
       /** Returns the game object */
       GamePtr getGame();
 
+      const Game exportGame() const;
+      void loadGame(const Game& game);
+
       //
       // Perform actions for the current player. Positions / Directions are relative to the player 0.
       //

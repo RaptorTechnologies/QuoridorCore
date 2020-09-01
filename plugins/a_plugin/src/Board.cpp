@@ -302,7 +302,10 @@ namespace TermAi
 					it = std::prev(it, 1);
 				}
 
-				auto nxt = *(std::next(it,1));
+				std::next(it, 1);
+				if (it == m_shortest_path[player].end())
+					break;
+				auto nxt = *it;
 
 				if ( (*it).first == nxt.first and (*it).second == (nxt.second  + 1))//( (*it)->left() ==  *(std::next(it,1)))
 					side = LEFT;

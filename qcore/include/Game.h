@@ -10,9 +10,9 @@
 
 namespace qcore
 {
-   class GameServer;
+   class  GameServer;
 
-   class Game
+   class QCODE_API Game
    {
       // Encapsulated data members
    private:
@@ -41,6 +41,10 @@ namespace qcore
       /** Construction */
       Game(uint8_t players);
 
+      Game(const Game& g);
+
+      Game& operator=(const Game& g);
+
       virtual ~Game() = default;
 
       /** Sets the game server */
@@ -64,10 +68,14 @@ namespace qcore
       /** Checks if player's action is valid */
       bool isActionValid(const PlayerAction& action, std::string& reason) const;
 
+      void restore();
+
    private:
 
       /** Checks if the player's path isn't blocked */
       bool checkPlayerPath(const PlayerId playerId, const PlayerAction& action) const;
+
+      void nextPlayer();
 
    };
 

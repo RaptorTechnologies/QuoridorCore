@@ -46,7 +46,7 @@ namespace qcore
       Position(int8_t x, int8_t y) : x(x), y(y) {}
 
       bool operator==(const Position& p) const;
-      Position operator=(const Position& p) const;
+      Position operator=(const Position& p);
 
       /** Computes the distance between 2 positions */
       uint8_t dist(const Position& p) const;
