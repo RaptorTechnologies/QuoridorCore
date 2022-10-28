@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 
 using namespace qcore::literals;
 
@@ -67,7 +68,7 @@ void PrintAsciiGameBoard()
     const std::string QUORIDOR_VERTICAL_WALL = std::string("\u2502");
 #endif
 
-    const std::string TABLE_TOP_MARGIN = "\n";
+    const std::string TABLE_TOP_MARGIN = "\n        ";
     const std::string TABLE_BOTTOM_MARGIN = "\n";
     const std::string TABLE_LEFT_MARGIN = "   ";
     const std::string TABLE_RIGHT_MARGIN = " ";
@@ -99,6 +100,8 @@ void PrintAsciiGameBoard()
          }
       }
    }
+
+   // system("clear");
 
    std::cout << TABLE_TOP_MARGIN;
 
@@ -184,6 +187,17 @@ void PrintAsciiGameBoard()
    }
 
    std::cout << TABLE_BOTTOM_RIGHT_BORDER << TABLE_RIGHT_MARGIN << "\n" << TABLE_BOTTOM_MARGIN;
+
+   // Print players state
+   std::cout << "                    " << std::setw(25) << "P0: " + GC.getPlayer(0)->getName();
+   std::cout << std::setw(25) << "P1: " + GC.getPlayer(1)->getName() << "\n";
+
+   std::cout << " Walls:             " << std::setw(25) << (int)GC.getPlayer(0)->getWallsLeft();
+   std::cout << std::setw(25) << (int)GC.getPlayer(1)->getWallsLeft() << "\n";
+
+   std::cout << " Move duration:     " << std::setw(25) << std::to_string(GC.getPlayer(0)->getLastMoveDuration() / 1000.0) + " sec ";
+   std::cout << std::setw(25) << std::to_string(GC.getPlayer(1)->getLastMoveDuration() / 1000.0) + " sec" << "\n";
+   std::cout << "\n\n";
 }
 
 void RunCommand_Move(std::ostream& out, qarg args)
