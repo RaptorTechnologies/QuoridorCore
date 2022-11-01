@@ -12,7 +12,7 @@ namespace qcore
    /** Log domain */
    const char * const DOM = "qcore::PL";
 
-   const auto PLAYER_MIN_TIME_MS = 500ms;
+   const auto PLAYER_MIN_TIME_MS = 1000ms;
 
    /** Construction */
    Player::Player(PlayerId id, const std::string& name, GamePtr game) :

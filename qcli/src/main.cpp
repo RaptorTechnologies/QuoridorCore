@@ -1,5 +1,6 @@
 #include "PluginManager.h"
 #include "GameController.h"
+#include "Game.h"
 
 #include <ConsoleApp.h>
 #include "ConsolePlayer.h"
@@ -46,6 +47,11 @@ inline std::ostream& operator<<(std::ostream &os, const TEXT_ASCII_COLOR color)
     return os;
 }
 
+void PrintPlayerInfo(const std::string info, bool highlight)
+{
+   std::cout << (highlight ? TEXT_ASCII_COLOR::RED : TEXT_ASCII_COLOR::OFF) << std::setw(25) << info << TEXT_ASCII_COLOR::OFF;
+}
+
 void PrintAsciiGameBoard()
 {
 #ifdef WIN32
@@ -68,7 +74,7 @@ void PrintAsciiGameBoard()
     const std::string QUORIDOR_VERTICAL_WALL = std::string("\u2502");
 #endif
 
-    const std::string TABLE_TOP_MARGIN = "\n        ";
+    const std::string TABLE_TOP_MARGIN = "\n     ";
     const std::string TABLE_BOTTOM_MARGIN = "\n";
     const std::string TABLE_LEFT_MARGIN = "   ";
     const std::string TABLE_RIGHT_MARGIN = " ";
@@ -101,7 +107,7 @@ void PrintAsciiGameBoard()
       }
    }
 
-   // system("clear");
+   system("clear");
 
    std::cout << TABLE_TOP_MARGIN;
 
@@ -188,16 +194,28 @@ void PrintAsciiGameBoard()
 
    std::cout << TABLE_BOTTOM_RIGHT_BORDER << TABLE_RIGHT_MARGIN << "\n" << TABLE_BOTTOM_MARGIN;
 
+   qcore::PlayerId pId = GC.getGame()->getCurrentPlayer();
+
    // Print players state
-   std::cout << "                    " << std::setw(25) << "P0: " + GC.getPlayer(0)->getName();
-   std::cout << std::setw(25) << "P1: " + GC.getPlayer(1)->getName() << "\n";
+   std::cout << "                    ";
+   PrintPlayerInfo("P0: " + GC.getPlayer(0)->getName(), pId == 0);
+   PrintPlayerInfo("P1: " + GC.getPlayer(1)->getName(), pId == 1);
 
-   std::cout << " Walls:             " << std::setw(25) << (int)GC.getPlayer(0)->getWallsLeft();
-   std::cout << std::setw(25) << (int)GC.getPlayer(1)->getWallsLeft() << "\n";
+   std::cout << "\n Walls:             ";
+   PrintPlayerInfo(std::to_string((int)GC.getPlayer(0)->getWallsLeft()), pId == 0);
+   PrintPlayerInfo(std::to_string((int)GC.getPlayer(1)->getWallsLeft()), pId == 1);
 
-   std::cout << " Move duration:     " << std::setw(25) << std::to_string(GC.getPlayer(0)->getLastMoveDuration() / 1000.0) + " sec ";
-   std::cout << std::setw(25) << std::to_string(GC.getPlayer(1)->getLastMoveDuration() / 1000.0) + " sec" << "\n";
+   std::cout << "\n Move duration:     ";
+   PrintPlayerInfo(std::to_string(GC.getPlayer(0)->getLastMoveDuration() / 1000.0) + " sec ", pId == 0);
+   PrintPlayerInfo(std::to_string(GC.getPlayer(1)->getLastMoveDuration() / 1000.0) + " sec ", pId == 1);
    std::cout << "\n\n";
+
+   if (GC.getBoardState()->isFinished())
+   {
+      std::cout << TEXT_ASCII_COLOR::GREEN << "                        "
+         << GC.getPlayer(GC.getBoardState()->getWinner())->getName() << " won!"
+         << TEXT_ASCII_COLOR::OFF << "\n";
+   }
 }
 
 void RunCommand_Move(std::ostream& out, qarg args)
@@ -361,6 +379,12 @@ int main(int argc, char *argv[])
 
    app.addCommand(RunCommand_Wall, "wall <x> <y> <orientation>", "Player Actions")
       .setSummary("Places a wall at position (x, y) with the specified orientation (v, h) ");
+
+   app.addCommand([&app](std::ostream &, qarg){ app.printHelp(); }, "help", "General")
+      .setSummary("Prints this menu");
+
+   app.addCommand([](std::ostream&, qarg){system("clear");}, "clear", "General")
+      .setSummary("Clear screen");
 
    // Run application
    return app.runCli(argc, argv);
