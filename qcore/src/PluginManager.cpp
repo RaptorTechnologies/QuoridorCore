@@ -78,13 +78,19 @@ namespace qcore
 
 #ifdef WIN32
             libHandle = LoadLibrary(p.path().string().c_str());
-#else
-            libHandle = dlopen(p.path().c_str(), RTLD_NOW | RTLD_GLOBAL);
-#endif
+
             if (not libHandle)
             {
-                throw util::Exception("Failed to load library " + p.path().string());
+                throw util::Exception("Failed to load library " + p.path().string() + ": Error code " + std::to_string(GetLastError()));
             }
+#else
+            libHandle = dlopen(p.path().c_str(), RTLD_NOW | RTLD_GLOBAL);
+
+            if (not libHandle)
+            {
+                throw util::Exception("Failed to load library " + p.path().string() + ": " + dlerror());
+            }
+#endif
 
             LOG_INFO(DOM) << "Loading " << p.path();
 
