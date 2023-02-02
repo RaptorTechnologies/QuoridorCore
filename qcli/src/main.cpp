@@ -274,6 +274,10 @@ void PrintAsciiGameBoard()
    PrintPlayerInfo(DurationToString(GC.getPlayer(0)->getLastMoveDuration()), pId == 0);
    PrintPlayerInfo(DurationToString(GC.getPlayer(1)->getLastMoveDuration()), pId == 1);
 
+   std::cout << "\n Illegal moves:     ";
+   PrintPlayerInfo(std::to_string(GC.getPlayer(0)->getIllegalMoves()), pId == 0);
+   PrintPlayerInfo(std::to_string(GC.getPlayer(1)->getIllegalMoves()), pId == 1);
+
    std::cout << "\n Moves to finish:   ";
    uint32_t path0 = ComputePath(0, GC.getBoardState());
    uint32_t path1 = ComputePath(1, GC.getBoardState());
@@ -284,9 +288,20 @@ void PrintAsciiGameBoard()
 
    if (GC.getBoardState()->isFinished())
    {
-      std::cout << TEXT_ASCII_COLOR::GREEN << "                        "
-         << GC.getPlayer(GC.getBoardState()->getWinner())->getName() << " won!"
-         << TEXT_ASCII_COLOR::OFF << "\n";
+      qcore::PlayerId winner = GC.getBoardState()->getWinner();
+
+      if (winner != 0xFF)
+      {
+         std::cout << TEXT_ASCII_COLOR::GREEN << "                        "
+            << GC.getPlayer(GC.getBoardState()->getWinner())->getName() << " won!"
+            << TEXT_ASCII_COLOR::OFF << "\n";
+      }
+      else
+      {
+         std::cout << TEXT_ASCII_COLOR::RED << "                        "
+            << "Game terminated!"
+            << TEXT_ASCII_COLOR::OFF << "\n";
+      }
    }
 }
 
