@@ -223,7 +223,11 @@ namespace qcore
          }
       });
 
-      if (!oneStep)
+      // Enable watchdog
+      const char *wdEnv = std::getenv("QUORIDOR_PLAYER_TIMEOUT_DISABLE");
+      bool wdDisabled = wdEnv ? std::stoi(wdEnv) : false;
+
+      if (!oneStep && !wdDisabled)
       {
          mWatchThread = std::thread([&]()
          {
