@@ -64,13 +64,20 @@ namespace qcore
    void PluginManager::LoadPlayerLibraries()
    {
       auto libPath = fs::current_path().concat(SHARED_LIBRARY_PATH);
+      const char *envPath = std::getenv("QUORIDOR_PLUGIN_PATH");
+
+      if (envPath)
+      {
+         libPath = envPath;
+      }
+
       // Check all shared libraries from our path
       if (not fs::exists(libPath) and not fs::is_directory(libPath))
       {
          throw util::Exception("Invalid shared library path [" + libPath.string() + "]");
       }
 
-      for (auto& p: fs::directory_iterator(fs::current_path().concat(SHARED_LIBRARY_PATH)))
+      for (auto& p: fs::directory_iterator(libPath))
       {
          if (p.path().extension() == SHARED_LIBRARY_EXT)
          {
