@@ -147,8 +147,8 @@ namespace qcore
       /** Notifies all listeners that the board state has changed */
       void notifyStateChange() const;
    };
-
    typedef std::shared_ptr<const BoardState> BoardStatePtr;
+
 }
 
 #endif // Header_qcore_GameState
