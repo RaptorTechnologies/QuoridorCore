@@ -214,8 +214,8 @@ namespace qcore
             mWalls.push_back(mLastAction.wallState);
 
             LOG_INFO(DOM) << "Placed wall by player " << (int) action.playerId << " at ("
-                          << (int) mLastAction.wallState.position.x << ", " << (int) mLastAction.wallState.position.y << ", "
-                          << (mLastAction.wallState.orientation == Orientation::Vertical ? "V" : "H") << ")";
+               << (int) mLastAction.wallState.position.x << ", " << (int) mLastAction.wallState.position.y << ", "
+               << (mLastAction.wallState.orientation == Orientation::Vertical ? "V" : "H") << ")";
 
             break;
          }
